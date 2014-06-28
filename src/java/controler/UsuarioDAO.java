@@ -28,11 +28,4 @@ public class UsuarioDAO extends DAO<Usuario>{
             JpaUtil.close();
         }
     }
-    
-    
-    public static void main(String args[]) {
-        Usuario usuario = new Usuario("TESTE", "email", "**", new Date());
-        UsuarioDAO usuarioDAO = new UsuarioDAO();
-        usuarioDAO.persistir(usuario);
-    }
 }

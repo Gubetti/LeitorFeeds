@@ -21,32 +21,21 @@ public class Inscricao {
     @Column(name = "idInscricao")
     private Integer id;
 
-    @Column(nullable=false)
+    @Column(nullable = false)
     private String caminhoURL;
-    
+
     @Column(nullable = false)
     private String nome;
-    
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pastaInscricaoPK.inscricao",
-    		cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    private List<PastaInscricao> listaPastaInscricao;
 
-    @OneToMany(mappedBy="inscricao", fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "inscricao", fetch = FetchType.LAZY)
     private List<Feed> listaFeed;
-    
+
     public Inscricao() {
     }
-    
+
     public Inscricao(String caminhoURL, String nome) {
         this.caminhoURL = caminhoURL;
         this.nome = nome;
-    }
-
-    public void addPastaInscricao(PastaInscricao pastaInscricao) {
-        if (this.listaPastaInscricao == null) {
-            this.listaPastaInscricao = new ArrayList<PastaInscricao>();
-        }
-        this.listaPastaInscricao.add(pastaInscricao);
     }
 
     public void addFeed(Feed feed) {
@@ -67,36 +56,24 @@ public class Inscricao {
     public void setCaminhoURL(String caminhoURL) {
         this.caminhoURL = caminhoURL;
     }
-    
+
     public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public List<PastaInscricao> getListaPastaInscricao() {
-        if (listaPastaInscricao == null) {
-            return Collections.emptyList();
-        } else {
-            return listaPastaInscricao;
-        }
+        return nome;
     }
-    
-    public void setListaPastaInscricao(List<PastaInscricao> listaPastaInscricao) {
-        this.listaPastaInscricao = listaPastaInscricao;
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public List<Feed> getListaFeed() {
         if (listaFeed == null) {
             return Collections.emptyList();
         } else {
-        	Collections.sort(listaFeed);
+            Collections.sort(listaFeed);
             return listaFeed;
         }
     }
-    
+
     public void setListaFeed(List<Feed> listaFeed) {
         this.listaFeed = listaFeed;
     }

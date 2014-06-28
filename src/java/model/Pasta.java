@@ -34,10 +34,6 @@ public class Pasta implements Comparable<Pasta>{
     @Column(nullable=false)
     private boolean pastaDefault;
     
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "pastaInscricaoPK.pasta",
-    		cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    private List<PastaInscricao> listaPastaInscricao;
-    
     public Pasta() {
     }
 
@@ -45,13 +41,6 @@ public class Pasta implements Comparable<Pasta>{
         this.nome = nome;
         this.usuario = usuario;
         this.pastaDefault = false;
-    }
-    
-    public void addPastaInscricao(PastaInscricao pastaInscricao) {
-    	if (this.listaPastaInscricao == null) {
-            this.listaPastaInscricao = new ArrayList<PastaInscricao>();
-        }
-        this.listaPastaInscricao.add(pastaInscricao);
     }
 
     public int getId() {
@@ -81,19 +70,6 @@ public class Pasta implements Comparable<Pasta>{
 	public void setPastaDefault(boolean pastaDefault) {
 		this.pastaDefault = pastaDefault;
 	}
-
-	public List<PastaInscricao> getListaPastaInscricao() {
-        if (listaPastaInscricao == null) {
-            return Collections.emptyList();
-        } else {
-        	Collections.sort(listaPastaInscricao);
-            return listaPastaInscricao;
-        }
-    }
-    
-    public void setListaPastaInscricao(List<PastaInscricao> listaPastaInscricao) {
-        this.listaPastaInscricao = listaPastaInscricao;
-    }
 
 
     @Override

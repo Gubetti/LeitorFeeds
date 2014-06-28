@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -36,34 +35,9 @@ public class Usuario {
     private Date ultimoAcesso;
     @Column(nullable = false)
     private boolean assinante;
-    /* Lembrar de utilizar (já que não existe auto-relacionamento)
-     * 
-     * usuarioSeguidor.setListaEuSigo(usuarioSeguidos);
-     * usuarioSeguidos[i].addUsuarioMeSegue(usuarioSeguidor);
-     * 
-     * ou, quando for apenas um
-     * 
-     * usuarioSeguidor.addUsuarioEuSigo(usuarioSeguido);
-     * usuarioSeguido.addUsuarioMeSegue(usuarioSeguidor);
-     * 
-     * o mesmo ocorre para Pastas:
-     * 
-     * usuario.addPasta(pasta);
-     * pasta.setUsuario(usuario);
-     * 
-     * ou a relação UsuarioFeed:
-     * 
-     * usuario.addUsuarioFeed(usuarioFeed);
-     * feed.addUsuarioFeed(usuarioFeed);
-     * 
-     */
 
     @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
     private List<Pasta> listaPasta;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuarioFeedPK.usuario",
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<UsuarioFeed> listaUsuarioFeed;
 
     @OneToMany(mappedBy = "usuario")
     private List<Tag> listaTag;
@@ -83,13 +57,6 @@ public class Usuario {
             this.listaPasta = new ArrayList<Pasta>();
         }
         this.listaPasta.add(pasta);
-    }
-
-    public void addUsuarioFeed(UsuarioFeed usuarioFeed) {
-        if (this.listaUsuarioFeed == null) {
-            this.listaUsuarioFeed = new ArrayList<UsuarioFeed>();
-        }
-        this.listaUsuarioFeed.add(usuarioFeed);
     }
 
     public void addTag(Tag tag) {
@@ -165,15 +132,6 @@ public class Usuario {
         this.listaPasta = listaPasta;
     }
 
-    public List<UsuarioFeed> getListaUsuarioFeed() {
-        if (listaUsuarioFeed == null) {
-            return Collections.emptyList();
-        } else {
-            Collections.sort(listaUsuarioFeed);
-            return listaUsuarioFeed;
-        }
-    }
-
     public void setListaTag(List<Tag> listaTag) {
         this.listaTag = listaTag;
     }
@@ -185,9 +143,5 @@ public class Usuario {
             Collections.sort(listaTag);
             return listaTag;
         }
-    }
-
-    public void setListaUsuarioFeed(List<UsuarioFeed> listaUsuarioFeed) {
-        this.listaUsuarioFeed = listaUsuarioFeed;
     }
 }

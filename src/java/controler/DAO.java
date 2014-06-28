@@ -11,6 +11,7 @@ public class DAO <T> {
             manager.persist(objeto);
             manager.getTransaction().commit();
         } catch (Exception e) {
+            e.printStackTrace();
             manager.getTransaction().rollback();
         } finally {
             manager.close();
@@ -25,6 +26,7 @@ public class DAO <T> {
             manager.merge(objeto);
             manager.getTransaction().commit();
         } catch (Exception e) {
+            e.printStackTrace();
             manager.getTransaction().rollback();
         } finally {
             manager.close();
@@ -39,6 +41,7 @@ public class DAO <T> {
             manager.remove(objeto);
             manager.getTransaction().commit();
         } catch (Exception e) {
+            e.printStackTrace();
             manager.getTransaction().rollback();
         } finally {
             manager.close();
