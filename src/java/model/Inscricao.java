@@ -19,7 +19,7 @@ public class Inscricao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idInscricao")
-    private int id;
+    private Integer id;
 
     @Column(nullable=false)
     private String caminhoURL;

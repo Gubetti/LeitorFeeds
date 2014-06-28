@@ -19,7 +19,7 @@ public class Tag implements Comparable<Tag>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idTag")
-    private int id;
+    private Integer id;
     
     @Column(nullable=false)
     private String nome;

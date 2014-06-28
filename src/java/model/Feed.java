@@ -24,7 +24,7 @@ public class Feed implements Comparable<Feed> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idFeed")
-    private int id;
+    private Integer id;
     private String titulo;
     @Column(nullable = false)
     private String caminhoURL; // além de ser utilizado como link para o usuário, será usado para verificar se o Feed já existe

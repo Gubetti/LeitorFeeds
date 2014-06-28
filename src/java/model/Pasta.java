@@ -22,7 +22,7 @@ public class Pasta implements Comparable<Pasta>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idPasta")
-    private int id;
+    private Integer id;
 
     @Column(nullable=false)
     private String nome;
