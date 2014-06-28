@@ -1,5 +1,6 @@
 package controler;
 
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -18,4 +19,20 @@ public class UsuarioDAO extends DAO<Usuario>{
         }
     }
     
+    public Usuario buscarUsuario(Integer id) {
+        EntityManager manager = JpaUtil.getEntityManager();
+        try {
+            return manager.find(Usuario.class, id);
+        } finally {
+            manager.close();
+            JpaUtil.close();
+        }
+    }
+    
+    
+    public static void main(String args[]) {
+        Usuario usuario = new Usuario("TESTE", "email", "**", new Date());
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        usuarioDAO.persistir(usuario);
+    }
 }

@@ -7,7 +7,7 @@ import javax.persistence.Persistence;
 public class JpaUtil {
 
     private static EntityManagerFactory factory = null;
-    private static final String NOME_BASE = "DBMY_167651";
+    private static final String NOME_BASE = "LeitorFeedsPU";
     
     private JpaUtil() {
     }

@@ -9,11 +9,9 @@ import javax.persistence.AssociationOverride;
 import javax.persistence.AssociationOverrides;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 @Entity
@@ -26,9 +24,9 @@ public class UsuarioFeed implements Comparable<UsuarioFeed>{
     private UsuarioFeedPK usuarioFeedPK;
 
     private Date lido;
-	private Date compartilhado;
-	private Date curtido;
-	private int notaFavoritado;
+    private Date compartilhado;
+    private Date curtido;
+    private int notaFavoritado;
 
     @ManyToMany
     @JoinTable(name = "UsuarioFeedTag")
@@ -73,7 +71,6 @@ public class UsuarioFeed implements Comparable<UsuarioFeed>{
     public Feed getFeed() {
         return getPk().getFeed();
     }
-
 
     public void addTag(Tag tag) {
     	if (this.listaTag == null) {
