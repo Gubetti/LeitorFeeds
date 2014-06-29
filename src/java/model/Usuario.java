@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,7 +35,7 @@ public class Usuario {
     @Column(nullable = false)
     private boolean assinante;
 
-    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "usuario")
     private List<Pasta> listaPasta;
 
     @OneToMany(mappedBy = "usuario")
@@ -103,6 +102,14 @@ public class Usuario {
         this.senha = senha;
     }
 
+    public boolean isAssinante() {
+        return assinante;
+    }
+
+    public void setAssinante(boolean assinante) {
+        this.assinante = assinante;
+    }
+
     public Date getEvento() {
         return this.evento;
     }
@@ -135,7 +142,7 @@ public class Usuario {
     public void setListaTag(List<Tag> listaTag) {
         this.listaTag = listaTag;
     }
-
+    
     public List<Tag> getListaTag() {
         if (listaTag == null) {
             return Collections.emptyList();

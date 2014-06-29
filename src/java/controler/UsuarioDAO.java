@@ -1,28 +1,29 @@
 package controler;
 
-import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import model.Usuario;
 
-public class UsuarioDAO extends DAO<Usuario>{
-    
+public class UsuarioDAO extends DAO<Usuario> {
+
     public List<Usuario> listarTodos() {
-       EntityManager manager = JpaUtil.getEntityManager();
+        EntityManager manager = JpaUtil.getEntityManager();
         try {
-            TypedQuery<Usuario> query = manager.createQuery("from Usuario", Usuario.class);
+            TypedQuery<Usuario> query = manager.createQuery("from USUARIO", Usuario.class);
             return query.getResultList();
         } finally {
             manager.close();
             JpaUtil.close();
         }
     }
-    
-    public Usuario buscarUsuario(Integer id) {
+
+    public Usuario buscarUsuario(String email) {
         EntityManager manager = JpaUtil.getEntityManager();
         try {
-            return manager.find(Usuario.class, id);
+            TypedQuery<Usuario> query = manager.createQuery("from USUARIO u where u.email like :email", Usuario.class);
+            query.setParameter("email", email);
+            return query.getSingleResult();
         } finally {
             manager.close();
             JpaUtil.close();

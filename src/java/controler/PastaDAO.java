@@ -16,7 +16,7 @@ public class PastaDAO extends DAO<Pasta> {
     public List<Pasta> pastasUsuario() {
         EntityManager manager = JpaUtil.getEntityManager();
         try {
-            TypedQuery<Pasta> query = manager.createQuery("from Pasta p where p.idUsuario = :idUsuario", Pasta.class);
+            TypedQuery<Pasta> query = manager.createQuery("from PASTA p where p.idUsuario = :idUsuario", Pasta.class);
             query.setParameter("idUsuario", idUsuario);
             return query.getResultList();
         } finally {

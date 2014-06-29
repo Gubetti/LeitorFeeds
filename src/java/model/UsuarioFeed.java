@@ -26,6 +26,7 @@ public class UsuarioFeed implements Comparable<UsuarioFeed> {
 
     @ManyToOne
     private Feed feed;
+
     @ManyToOne
     private Usuario usuario;
 
@@ -42,6 +43,11 @@ public class UsuarioFeed implements Comparable<UsuarioFeed> {
     private List<Tag> listaTag;
 
     public UsuarioFeed() {
+    }
+
+    public UsuarioFeed(Usuario usuario, Feed feed) {
+        this.usuario = usuario;
+        this.feed = feed;
     }
 
     public void addTag(Tag tag) {

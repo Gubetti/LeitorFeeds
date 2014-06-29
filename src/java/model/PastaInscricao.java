@@ -17,9 +17,6 @@ public class PastaInscricao implements Comparable<PastaInscricao> {
     private Integer id;
 
     @ManyToOne
-    private Pasta pasta;
-
-    @ManyToOne
     private Inscricao inscricao;
 
     @Column(nullable = false)
@@ -29,13 +26,13 @@ public class PastaInscricao implements Comparable<PastaInscricao> {
     public Integer getId() {
         return id;
     }
-    
-    public Pasta getPasta() {
-        return pasta;
-    }
 
     public Inscricao getInscricao() {
         return inscricao;
+    }
+
+    public void setInscricao(Inscricao inscricao) {
+        this.inscricao = inscricao;
     }
 
     public Date getEvento() {
@@ -48,13 +45,13 @@ public class PastaInscricao implements Comparable<PastaInscricao> {
 
     @Override
     public int compareTo(PastaInscricao o) {
-        if (this.getInscricao().getNome()
-                .compareTo(o.getInscricao().getNome()) > 0) {
+        if (this.inscricao.getNome()
+                .compareTo(o.inscricao.getNome()) > 0) {
             return 1;
         }
 
-        if (this.getInscricao().getNome()
-                .compareTo(o.getInscricao().getNome()) < 0) {
+        if (this.inscricao.getNome()
+                .compareTo(o.inscricao.getNome()) < 0) {
             return -1;
         }
 

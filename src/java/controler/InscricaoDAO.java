@@ -5,12 +5,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import model.Inscricao;
 
-public class InscricaoDAO {
+public class InscricaoDAO extends DAO<Inscricao>{
 
     public List<Inscricao> listarTodos() {
         EntityManager manager = JpaUtil.getEntityManager();
         try {
-            TypedQuery<Inscricao> query = manager.createQuery("from Inscricao", Inscricao.class);
+            TypedQuery<Inscricao> query = manager.createQuery("from INSCRICAO", Inscricao.class);
             return query.getResultList();
         } finally {
             manager.close();
@@ -31,7 +31,7 @@ public class InscricaoDAO {
     public Inscricao existeInscricao(String caminhoURL) {
         EntityManager manager = JpaUtil.getEntityManager();
         try {
-            TypedQuery<Inscricao> query = manager.createQuery("from Inscricao i where i.caminhoURL like :caminhoURL", Inscricao.class);
+            TypedQuery<Inscricao> query = manager.createQuery("from INSCRICAO i where i.caminhoURL like :caminhoURL", Inscricao.class);
             query.setParameter("caminhoURL", caminhoURL);
             return query.getSingleResult();
         } finally {
