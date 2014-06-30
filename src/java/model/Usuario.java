@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,10 +36,10 @@ public class Usuario {
     @Column(nullable = false)
     private boolean assinante;
 
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "usuario", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private List<Pasta> listaPasta;
 
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "usuario", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private List<Tag> listaTag;
 
     public Usuario() {
