@@ -33,7 +33,7 @@ public class InscricaoDAO extends DAO<Inscricao> {
         EntityManager manager = JpaUtil.getEntityManager();
         try {
             TypedQuery<Inscricao> query = manager.createQuery("from INSCRICAO i where i.caminhoURL like :caminhoURL", Inscricao.class);
-            query.setParameter("caminhoURL", caminhoURL);
+            query.setParameter("caminhoURL", caminhoURL.toLowerCase());
             return query.getSingleResult();
         } finally {
             manager.close();
@@ -44,7 +44,7 @@ public class InscricaoDAO extends DAO<Inscricao> {
     public Feed existeFeed(Inscricao inscricao, String caminhoURL) {
         EntityManager manager = JpaUtil.getEntityManager();
         try {
-            TypedQuery<Feed> query = manager.createQuery("from FEED f where f.idInscricao = :idInscricao AND f.caminhoURL like :caminhoURL", Feed.class);
+            TypedQuery<Feed> query = manager.createQuery("from FEED f where f.inscricao.id = :idInscricao AND f.caminhoURL like :caminhoURL", Feed.class);
             query.setParameter("idInscricao", inscricao.getId());
             query.setParameter("caminhoURL", caminhoURL);
             return query.getSingleResult();

@@ -94,8 +94,7 @@ public class LoginBean {
                 Utils.retornaSessao().setAttribute(Utils.USUARIO, usuario);
                 ParseFeed.atualizarFeedUsuario();
                 try {
-                    FacesContext.getCurrentInstance().getExternalContext()
-                            .redirect("principal.jsf");
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("principal.jsf");
                     usuario.setUltimoAcesso(new Date());
                     usuarioDAO.atualizar(usuario);
                     setNome(usuario.getNome());
@@ -127,8 +126,7 @@ public class LoginBean {
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         if (Utils.decriptar(usuario.getSenha(), senhaAtual)) {
             Usuario usu = usuarioDAO.buscarUsuario(email);
-            if (usu.getEmail().equalsIgnoreCase(email)
-                    && usuario.getId() != usu.getId()) {
+            if (usu != null && usuario.getId() != usu.getId()) {
                 FacesMessage erro = new FacesMessage(
                         FacesMessage.SEVERITY_FATAL, "Email já existente.",
                         "");

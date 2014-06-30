@@ -90,7 +90,7 @@ public class ParseFeed {
     }
 
     private static boolean existeUsuarioFeed(Feed feed, Usuario usuario, UsuarioFeedDAO usuarioFeedDAO) {
-        UsuarioFeed usuarioFeed = usuarioFeedDAO.retornaUsuarioFeed(usuario, feed);
+        UsuarioFeed usuarioFeed = usuarioFeedDAO.retornaUsuarioFeed(usuario.getId(), feed.getId());
         if (usuarioFeed != null) {
             if (usuarioFeed.getFeed().getPubDate().compareTo(feed.getPubDate()) == 0) {
                 return true;

@@ -1,16 +1,11 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -27,9 +22,6 @@ public class Tag implements Comparable<Tag>{
     @ManyToOne
     @JoinColumn(name="idUsuario")
     private Usuario usuario;
-
-    @ManyToMany(mappedBy = "listaTag")
-    private List<UsuarioFeed> listaUsuarioFeed;
 	
     public Tag() {
     }
@@ -38,25 +30,6 @@ public class Tag implements Comparable<Tag>{
     	this.nome = nome;
     }
 
-    public void addUsuarioFeed(UsuarioFeed usuarioFeed) {
-    	if (this.listaUsuarioFeed == null) {
-            this.listaUsuarioFeed = new ArrayList<UsuarioFeed>();
-        }
-        this.listaUsuarioFeed.add(usuarioFeed);
-    }
-
-	public List<UsuarioFeed> getListaUsuarioFeed() {
-        if (listaUsuarioFeed == null) {
-            return Collections.emptyList();
-        } else {
-            return listaUsuarioFeed;
-        }
-    }
-    
-    public void setListaUsuarioFeed(List<UsuarioFeed> listaUsuarioFeed) {
-        this.listaUsuarioFeed = listaUsuarioFeed;
-    }
-    
     public Usuario getUsuario() {
 		return usuario;
 	}

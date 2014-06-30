@@ -7,12 +7,13 @@ import model.Pasta;
 
 public class PastaDAO extends DAO<Pasta> {
 
-    public List<Pasta> pastasUsuario(Integer idUsuario) {
+    public Pasta existePasta(Integer idUsuario, String nomePasta) {
         EntityManager manager = JpaUtil.getEntityManager();
         try {
-            TypedQuery<Pasta> query = manager.createQuery("from PASTA p where p.idUsuario = :idUsuario", Pasta.class);
+            TypedQuery<Pasta> query = manager.createQuery("from PASTA p where p.usuario.id = :idUsuario and p.nome like :nome", Pasta.class);
             query.setParameter("idUsuario", idUsuario);
-            return query.getResultList();
+            query.setParameter("nome", nomePasta);
+            return query.getSingleResult();
         } finally {
             manager.close();
             JpaUtil.close();

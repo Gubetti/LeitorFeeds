@@ -23,6 +23,14 @@ public class PastaInscricao implements Comparable<PastaInscricao> {
     @Temporal(TemporalType.TIMESTAMP)
     private Date evento;
 
+    public PastaInscricao() {
+    }
+
+    public PastaInscricao(Inscricao inscricao, Date evento) {
+        this.inscricao = inscricao;
+        this.evento = evento;
+    }
+
     public Integer getId() {
         return id;
     }
