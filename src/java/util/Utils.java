@@ -3,8 +3,12 @@ package util;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 public class Utils {
+
+    public static final String USUARIO = "usuario";
 
     public static String encriptar(String valor) {
         try {
@@ -25,4 +29,7 @@ public class Utils {
         return false;
     }
 
+    public static HttpSession retornaSessao() {
+        return (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+    }
 }

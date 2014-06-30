@@ -10,7 +10,6 @@ import model.Feed;
 import model.Inscricao;
 import model.Pasta;
 import model.PastaInscricao;
-import model.TipoFeed;
 import model.Usuario;
 import model.UsuarioFeed;
 
@@ -20,6 +19,7 @@ import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
 import controler.DAO;
 import controler.InscricaoDAO;
+import controler.UsuarioFeedDAO;
 
 public class ParseFeed {
 
@@ -39,7 +39,7 @@ public class ParseFeed {
             for (@SuppressWarnings("rawtypes") Iterator i = syndFeed.getEntries().iterator(); i.hasNext();) {
                 j++;
                 SyndEntry entry = (SyndEntry) i.next();
-                Feed feed = null;//existeFeed(inscricao, entry.getUri(), entry.getPublishedDate().getTime());
+                Feed feed = inscricaoDAO.existeFeed(inscricao, entry.getUri());
                 if (feed == null) {
                     Date pubDate = entry.getPublishedDate();
                     if (entry.getUpdatedDate() != null && entry.getUpdatedDate().after(entry.getPublishedDate())) {
@@ -71,6 +71,37 @@ public class ParseFeed {
         }
 
         inscricaoDAO.atualizar(inscricao);
+    }
+
+    public static void atualizarFeedUsuario() {
+        Usuario usuario = ((Usuario) Utils.retornaSessao().getAttribute(Utils.USUARIO));
+        UsuarioFeedDAO usuarioFeedDAO = new UsuarioFeedDAO();
+        List<Pasta> pastas = usuario.getListaPasta();
+        for (int i = 0; i < pastas.size(); i++) {
+            for (PastaInscricao pastaInscricao : pastas.get(i).getListaPastaInscricao()) {
+                for (Feed feed : pastaInscricao.getInscricao().getListaFeed()) {
+                    if (existeUsuarioFeed(feed, usuario, usuarioFeedDAO)) {
+                        break;
+                    }
+                    adicionarUsuarioFeed(feed, usuario, usuarioFeedDAO);
+                }
+            }
+        }
+    }
+
+    private static boolean existeUsuarioFeed(Feed feed, Usuario usuario, UsuarioFeedDAO usuarioFeedDAO) {
+        UsuarioFeed usuarioFeed = usuarioFeedDAO.retornaUsuarioFeed(usuario, feed);
+        if (usuarioFeed != null) {
+            if (usuarioFeed.getFeed().getPubDate().compareTo(feed.getPubDate()) == 0) {
+                return true;
+            }
+            usuarioFeedDAO.excluir(usuarioFeed);
+        }
+        return false;
+    }
+
+    private static void adicionarUsuarioFeed(Feed feed, Usuario usuario, UsuarioFeedDAO usuarioFeedDAO) {
+        usuarioFeedDAO.persistir(new UsuarioFeed(usuario, feed));
     }
 
     public static boolean validarUrl(String caminho) {

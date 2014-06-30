@@ -7,13 +7,7 @@ import model.Pasta;
 
 public class PastaDAO extends DAO<Pasta> {
 
-    private Integer idUsuario;
-
-    public PastaDAO(Integer idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-
-    public List<Pasta> pastasUsuario() {
+    public List<Pasta> pastasUsuario(Integer idUsuario) {
         EntityManager manager = JpaUtil.getEntityManager();
         try {
             TypedQuery<Pasta> query = manager.createQuery("from PASTA p where p.idUsuario = :idUsuario", Pasta.class);

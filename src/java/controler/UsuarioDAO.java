@@ -22,7 +22,7 @@ public class UsuarioDAO extends DAO<Usuario> {
         EntityManager manager = JpaUtil.getEntityManager();
         try {
             TypedQuery<Usuario> query = manager.createQuery("from USUARIO u where u.email like :email", Usuario.class);
-            query.setParameter("email", email);
+            query.setParameter("email", email.toLowerCase());
             return query.getSingleResult();
         } finally {
             manager.close();
