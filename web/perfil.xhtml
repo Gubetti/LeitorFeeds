@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="/WEB-INF/templates/default.xhtml">
+    <ui:define name="conteudo">
+        <p:scrollPanel mode="native">
+            <p:panel header="Alterar informações">
+                <h:outputText value="Seus dados" />
+                <br />
+                <h:form id="infoForm">
+                    <p:messages id="messages" showDetail="true" autoUpdate="true"
+                                closable="true" />
+                    <p:panel>
+                        <h:panelGrid columns="2">
+                            <p:outputLabel for="login">Email:</p:outputLabel>
+                            <p:inputText id="login" value="#{loginBean.email}" required="true">
+                                <f:validateRegex
+                                    pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                            </p:inputText>
+                            <p:outputLabel for="nome">Nome:</p:outputLabel>
+                            <p:inputText id="nome" value="#{loginBean.nome}" required="true" />
+                            <p:outputLabel for="senhaAtual">Senha:</p:outputLabel>
+                            <p:password id="senhaAtual" value="#{loginBean.senhaAtual}"
+                                        required="true" />
+                            <p:commandButton actionListener="#{loginBean.alterarDados}"
+                                             value="Alterar dados" update="infoForm" />
+                        </h:panelGrid>
+                    </p:panel>
+                </h:form>
+			
+                <h:outputText value="Alterar senha" />
+                <br />
+                <h:form id="senhaForm">
+                    <p:messages id="messages" showDetail="true" autoUpdate="true"
+                                closable="true" />
+                    <p:panel>
+                        <h:panelGrid columns="2">
+                            <p:outputLabel for="senha">Nova Senha:</p:outputLabel>
+                            <p:password id="senha" value="#{loginBean.senha}" required="true" />
+                            <p:outputLabel for="confirmeSenha">Confirme Nova Senha:</p:outputLabel>
+                            <p:password id="confirmeSenha" value="#{loginBean.confirmeSenha}"
+                                        required="true" />
+                            <p:outputLabel for="senhaAtual">Senha Atual:</p:outputLabel>
+                            <p:password id="senhaAtual" value="#{loginBean.senhaAtual}"
+                                        required="true" />
+                            <p:commandButton actionListener="#{loginBean.alterarSenha}"
+                                             value="Alterar senha" update="senhaForm" />
+                        </h:panelGrid>
+                    </p:panel>
+                </h:form>
+            </p:panel>
+
+        </p:scrollPanel>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+	<title>Se cadastre abaixo</title>
+        <h:outputStylesheet name="css/principal.css" />
+</h:head>
+
+<h:body>
+    <h:form id="registerForm">
+        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+        <p:panel style="margin:auto;width:380px">
+
+            <h:panelGrid columns="2">
+                <p:outputLabel for="login">Email:</p:outputLabel>
+<!--
+Revisar componentes (em todas as páginas) que precisam emitir mensagem...
+-->                <p:inputText id="login" value="#{loginBean.email}" required="true" update="messages">
+                    <f:validateRegex
+                        pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                </p:inputText>
+                <p:outputLabel for="nome">Nome:</p:outputLabel>
+                <p:inputText id="nome" value="#{loginBean.nome}" required="true" update="messages"/>
+                <p:outputLabel for="senha">Senha:</p:outputLabel>
+                <p:password id="senha"  value="#{loginBean.senha}" required="true" update="messages"/>
+                <p:outputLabel for="confirmeSenha">Confirme:</p:outputLabel>
+                <p:password id="confirmeSenha"  value="#{loginBean.confirmeSenha}" required="true" update="messages"/>
+                <p:commandButton actionListener="#{loginBean.cadastrar}" value="Registrar" style="width:150%" update="registerForm" />  
+            </h:panelGrid>
+        </p:panel>
+    </h:form>
+    <p:separator/>
+    <p:commandButton value="Login" action="index" />  
+</h:body>
+
+</html>
+
+
+
+
+
