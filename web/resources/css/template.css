@@ -1,0 +1,57 @@
+html, .full-height {
+   height: 100%;
+   margin-top: 0;
+   margin-bottom: 0;
+}
+
+.menuButton {
+	width: 100% !important;
+}
+
+#formAddInscricao\:inputAddInscricao.ui-inputfield,
+#formTag\:inputAddTag.ui-inputfield,
+#formAddPastas\:inputAddPasta.ui-inputfield {
+	width: 160px;
+	margin-right: 10px;
+}
+
+#formAddInscricao\:buttonAddInscricao,
+#formTag\:buttonAddTag,
+#formAddPastas\:buttonAddPasta {
+	width: 85px;
+}
+.ui-autocomplete-multiple-container {
+	width: 600px !important;
+	height: 30px !important;
+}
+
+.ui-autocomplete-token {
+	height: 20px !important;
+	font-size: 16px !important;
+}
+
+#formbuscaTag\:buscaTag_input.ui-autocomplete,
+#formbuscaTag\:buscaTag_input.ui-autocomplete-input,
+#formbuscaTag\:buscaTag_input {
+	width: 100% !important;
+}
+
+.ui-panel {
+	margin-right: 15px !important;
+}
+
+.ui-panel-title {
+	font-size: 14px !important;
+	font-weight: normal !important;
+}
+
+.ui-panel-titlebar {
+	padding: 3px !important;
+	padding-left: 8px !important;
+}
+
+/*
+.ui-inputtextarea {
+	height: 110px !important;
+}
+*/

@@ -12,15 +12,11 @@
 <h:body>
     <h:form id="loginForm">
         <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-        <p:panel style="margin:auto;width:350px">
+        <p:panel style="margin:auto;width:295px">
 
             <h:panelGrid columns="2">
                 <p:outputLabel for="login">Email:</p:outputLabel>
-<!--
-Revisar componentes (em todas as páginas) que precisam emitir mensagem...
-<p:inputText id="login" value="#{loginBean.email}" required="true" update="messages"/>
--->
-                <p:inputText id="login" value="#{loginBean.email}" required="true" />
+                <p:inputText id="login" value="#{loginBean.email}" required="true" style="width:200px" />
                 <p:outputLabel for="senha">Senha:</p:outputLabel>
                 <p:password id="senha"  value="#{loginBean.senha}" required="true"/>
                 <p:commandButton actionListener="#{loginBean.autenticar}" value="Entrar" style="width:150%" update="loginForm" />  
@@ -28,8 +24,10 @@ Revisar componentes (em todas as páginas) que precisam emitir mensagem...
         </p:panel>
     </h:form>
     <p:separator/>
-    <p:outputLabel for="novo">Novo? Registre-se aqui:</p:outputLabel>
-    <p:commandButton id="novo" value="Registrar" action="registrar" />  
+    <h:form id="registerForm">
+        <p:outputLabel for="novo">Novo? Registre-se aqui:</p:outputLabel>
+        <p:commandButton id="novo" value="Registrar" action="registrar" />  
+    </h:form>
 </h:body>
 
 </html>
