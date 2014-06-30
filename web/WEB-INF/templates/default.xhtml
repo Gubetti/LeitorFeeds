@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Leitor Feeds</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="css/bootstrap.min.css" />
+        <h:outputStylesheet name="css/principal.css" />
+        <!-- Colocar css direto aqui
+            Exemplo
+            <h:outputStylesheet name="css/bootstrap.css" />
+            -->
+    </h:head>
+    <!-- full-height na tag body é necessário para eliminar o scroll quando o row principal é configurado com width: 100% -->
+    <h:body styleClass="full-height">
+        <!-- container-fluid da página toda -->
+        <div class="container-fluid full-height">
+            <!-- row principal que contém o grid lateral e o grid main -->
+            <div class="row full-height">
+                <p:messages id="messages" showDetail="true" autoUpdate="true"
+                            closable="true" />
+                <!-- grid da esquerda com col-sm-3 -->
+                <div class="col-sm-3 col-xs-5 panel panel-default full-height navbar navbar-default" role="navigation">
+                    <p:scrollPanel mode="native">
+                        <p:panel header="Adicionar Inscrição">
+                            <h:form id="formAddInscricao">
+                                <p:inputText id="inputAddInscricao" value="#{inscricaoBean.url}"
+                                             required="true" />
+                                    <p:commandButton id="buttonAddInscricao" value="Adicionar"
+                                                     actionListener="#{inscricaoBean.incluirInscricao}"
+                                                     action="#{usuarioFeedBean.mostrarTodos}" update="@all" />
+                            </h:form>
+                        </p:panel>
+
+                        <p:panel header="Menu">
+                            <h:form>
+                                <p:commandButton styleClass="menuButton" value="Todos"
+                                                 action="#{usuarioFeedBean.mostrarTodos}" update="@all" />
+                                <p:commandButton styleClass="menuButton" value="Curtidos"
+                                                 action="#{usuarioFeedBean.mostrarCurtidos}" update="@all" />
+                                <p:commandButton styleClass="menuButton" value="Compartilhados"
+                                                 action="#{usuarioFeedBean.mostrarCompartilhados}" update="@all" />
+                                <p:commandButton styleClass="menuButton" value="Favoritados"
+                                                 action="#{usuarioFeedBean.mostrarFavoritados}" update="@all" />
+                                <p:commandButton styleClass="menuButton" value="Perfil"
+                                                 action="#{usuarioBean.perfil}" />
+                                <p:commandButton styleClass="menuButton" value="Logout"
+                                                 action="#{loginBean.sair}" />
+                            </h:form>
+                        </p:panel>
+
+                        <p:panel header="Tags">
+                            <h:form id="formTag">
+                                <p:outputLabel for="inputAddTag" value="Criar Tag" />
+                                <br />
+                                <p:inputText id="inputAddTag" value="#{tagBean.novaTag}"
+                                             required="true" />
+                                <p:commandButton id="buttonAddTag" value="Criar"
+                                                 action="#{tagBean.criarTag}" />
+                            </h:form>
+                            <br />
+                            <h:form id="formbuscaTag">
+                                <p:outputLabel value="Buscar Tags" for="buscaTag" />
+                                <p:autoComplete id="buscaTag" completeMethod="#{tagBean.autoList}"
+                                                value="#{usuarioFeedBean.tagSelecionada}"
+                                                var="tagSel" itemLabel="#{tagSel.nome}" itemValue="#{tagSel}"
+                                                >
+<!-- descomentar
+                                                converter="tagConverter" forceSelection="true" >
+-->
+                                    <p:ajax event="itemSelect"
+                                            listener="#{usuarioFeedBean.mostrarComTag}"
+                                            update="@all"/>
+                                </p:autoComplete>
+                            </h:form>
+                        </p:panel>
+
+                        <p:panel header="Inscrições">
+                            <h:form id="formAddPastas">
+                                <p:outputLabel for="inputAddPasta" value="Adicionar Pasta" />
+                                <br />
+                                <p:inputText id="inputAddPasta" value="#{pastaBean.novaPasta}"
+                                             required="true" />
+                                <p:commandButton id="buttonAddPasta" value="Adicionar"
+                                                 action="#{pastaBean.addPasta}" update="@all" />
+                            </h:form>
+                            <br />
+                            <h:form id="formPastas">
+                                <p:accordionPanel value="#{pastaBean.pastas}" var="pasta"
+                                                  multiple="true">
+                                    <p:tab title="#{pasta.nome}">
+                                        <p:dataList value="#{pasta.listaPastaInscricao}"
+                                                    var="inscr" type="definition">
+                                            <p:commandLink style="font-size: 12px;"
+                                                           action="#{usuarioFeedBean.filtrarInscricao}"
+                                                           update="@all">
+                                                <h:outputText
+                                                    value="#{inscr.pastaInscricaoPK.inscricao.nome}" />
+                                                <f:setPropertyActionListener
+                                                    value="#{inscr.pastaInscricaoPK.inscricao}"
+                                                    target="#{usuarioFeedBean.inscricaoAtual}" />
+                                            </p:commandLink>
+                                            <br/>
+                                            <p:commandButton value="Mover"
+                                                             oncomplete="PF('dMover').show()">
+                                                <f:setPropertyActionListener value="#{inscr}"
+                                                                             target="#{pastaBean.pastaInscricaoSelecionada}" />
+                                            </p:commandButton>
+                                            <p:dialog header="Mover" widgetVar="dMover" modal="true"
+                                                      closeOnEscape="true">
+                                                <p:dataList value="#{pastaBean.pastas}" var="pastaM"
+                                                            type="definition">
+                                                    <h:outputText value="#{pastaM.nome}" />
+                                                    <p:commandButton value="Mover"
+                                                                     oncomplete="PF('dMover').hide()" update="@all">
+                                                        <f:setPropertyActionListener value="#{pastaM}"
+                                                                                     target="#{pastaBean.pastaSelecionada}" />
+                                                    </p:commandButton>
+                                                </p:dataList>
+                                            </p:dialog>
+                                        </p:dataList>
+                                    </p:tab>
+                                </p:accordionPanel>
+                            </h:form>
+                        </p:panel>
+                    </p:scrollPanel>
+
+                </div>
+                <!-- grid da direita com col-sm-9 -->
+                <div class="col-sm-9 col-xs-7 panel panel-default full-height">
+                    <ui:insert name="conteudo">
+                    </ui:insert>
+                </div>
+            </div>
+        </div>
+        <!-- scripts -->
+        <h:outputScript name="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" />
+        <h:outputScript library="js" name="bootstrap.min.js" />
+    </h:body>
+</html>
+

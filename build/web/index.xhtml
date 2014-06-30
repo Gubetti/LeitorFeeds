@@ -1,16 +1,35 @@
-<?xml version='1.0' encoding='UTF-8' ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-        <h:form>
-            <h:commandButton action="#{loginBean.teste()}"></h:commandButton>
-        </h:form>
-        
-    </h:body>
-</html>
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Faça o Login</title>
+        <h:outputStylesheet name="css/principal.css" />
+</h:head>
 
+<h:body>
+    <h:form id="loginForm">
+        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+        <p:panel style="margin:auto;width:350px">
+
+            <h:panelGrid columns="2">
+                <p:outputLabel for="login">Email:</p:outputLabel>
+<!--
+Revisar componentes (em todas as páginas) que precisam emitir mensagem...
+<p:inputText id="login" value="#{loginBean.email}" required="true" update="messages"/>
+-->
+                <p:inputText id="login" value="#{loginBean.email}" required="true" />
+                <p:outputLabel for="senha">Senha:</p:outputLabel>
+                <p:password id="senha"  value="#{loginBean.senha}" required="true"/>
+                <p:commandButton actionListener="#{loginBean.autenticar}" value="Entrar" style="width:150%" update="loginForm" />  
+            </h:panelGrid>
+        </p:panel>
+    </h:form>
+    <p:separator/>
+    <p:outputLabel for="novo">Novo? Registre-se aqui:</p:outputLabel>
+    <p:commandButton id="novo" value="Registrar" action="registrar" />  
+</h:body>
+
+</html>

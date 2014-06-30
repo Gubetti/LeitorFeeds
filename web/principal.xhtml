@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="/WEB-INF/templates/default.xhtml">
+    <ui:define name="conteudo">
+        <p:scrollPanel mode="native">
+            <p:panel id="tituloFeeds" header="#{usuarioFeedBean.tituloFeed}">
+                <h:form id="formNotaSelecionada">
+                    <p:outputLabel for="notaSelecionada"
+                                   rendered="#{usuarioFeedBean.favoritos ? 'true' : 'false'}">
+                        Visualizando: 
+                    </p:outputLabel>
+                    <p:selectOneMenu id="notaSelecionada"
+                                     value="#{usuarioFeedBean.notaSelecionada}"
+                                     rendered="#{usuarioFeedBean.favoritos ? 'true' : 'false'}">
+                        <f:selectItem itemLabel="Todos" itemValue="0" />
+                        <f:selectItem itemLabel="Uma estrela" itemValue="1" />
+                        <f:selectItem itemLabel="Duas estrelas" itemValue="2" />
+                        <f:selectItem itemLabel="Três estrelas" itemValue="3" />
+                        <f:selectItem itemLabel="Quatro estrelas" itemValue="4" />
+                        <f:selectItem itemLabel="Cinco estrelas" itemValue="5" />
+                    </p:selectOneMenu>
+                    <p:commandButton value="OK" action="#{usuarioFeedBean.filtrarNota}"
+                                     rendered="#{usuarioFeedBean.favoritos ? 'true' : 'false'}"
+                                     update="@all"/>
+                </h:form>
+
+                <p:dataGrid columns="1" id="usuarioFeeds" var="feed"
+                            value="#{usuarioFeedBean.usuarioFeeds}" paginator="true"
+                            rows="20">
+                    <h:outputLink value="#{feed.feed.caminhoURL}" target="_blank">
+                        <h:outputText value="#{feed.feed.titulo}" escape="false"
+                                      style="font-weight: bold" />
+                    </h:outputLink>
+                    <br />
+                    <h:outputText value="Publicado em: " style="font-size: 0.5em;" />
+                    <h:outputText value="#{feed.feed.pubDate}" style="font-size: 0.5em;">
+                        <f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
+                    </h:outputText>
+                    <br />
+                    <h:outputText value="#{feed.feed.conteudo}" escape="false" />
+                    <h:form id="formBotoes">
+                        <p:commandButton id="curtir" action="#{usuarioFeedBean.curtir}"
+                                         value="#{feed.curtido==null ? 'Curtir' : 'Descurtir'}"
+                                         update="formBotoes">
+                            <f:setPropertyActionListener value="#{feed}"
+                                                         target="#{usuarioFeedBean.usuarioFeedSelecionado}" />
+                        </p:commandButton>
+                        <p:commandButton id="compartilhar"
+                                         action="#{usuarioFeedBean.compartilhar}"
+                                         value="#{feed.compartilhado==null ? 'Compartilhar' : 'Compartilhado'}"
+                                         disabled="#{feed.compartilhado==null ? 'false' : 'true'}"
+                                         update="formBotoes">
+                            <f:setPropertyActionListener value="#{feed}"
+                                                         target="#{usuarioFeedBean.usuarioFeedSelecionado}" />
+                        </p:commandButton>
+                        <p:commandButton id="ler" action="#{usuarioFeedBean.ler}"
+                                         value="#{feed.lido==null ? 'Marcar como lido' : 'Desmarcar'}"
+                                         update="formBotoes">
+                            <f:setPropertyActionListener value="#{feed}"
+                                                         target="#{usuarioFeedBean.usuarioFeedSelecionado}" />
+                        </p:commandButton>
+                        <br />
+                        <p:outputLabel value="Tags:" for="autoTags" />
+                        <p:autoComplete id="autoTags" multiple="true"
+                                        value="#{feed.listaTag}" completeMethod="#{tagBean.autoList}"
+                                        var="tag" itemLabel="#{tag.nome}" itemValue="#{tag}"
+                                        >
+<!-- descomentar
+                                                converter="tagConverter" forceSelection="true" >
+-->
+                            <p:ajax event="itemSelect"
+                                    listener="#{tagBean.inserirTag(feed)}" />
+                            <p:ajax event="itemUnselect"
+                                    listener="#{tagBean.removerTag(feed)}" />
+                        </p:autoComplete>
+                        <p:rating value="#{feed.notaFavoritado}">
+                            <p:ajax event="rate" listener="#{usuarioFeedBean.favoritar(feed)}" />
+                            <p:ajax event="cancel" listener="#{usuarioFeedBean.favoritar(feed)}" />
+                        </p:rating>
+                    </h:form>
+                    <p:separator />
+
+                </p:dataGrid>
+            </p:panel>
+        </p:scrollPanel>
+    </ui:define>
+</ui:composition>
