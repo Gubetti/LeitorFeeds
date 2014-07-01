@@ -185,12 +185,12 @@ public class LoginBean {
      */
     public String sair() {
         Utils.retornaSessao().invalidate();
-        return "/index?faces-redirect=true";
+        return "/feeds/index?faces-redirect=true";
     }
 
     public void perfil() {
         try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("perfil.jsf");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("feeds/perfil.jsf");
         } catch (IOException e) {
             e.printStackTrace();
         }

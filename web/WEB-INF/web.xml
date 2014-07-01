@@ -35,6 +35,14 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>leitor/index.xhtml</welcome-file>
+        <welcome-file>leitor/feeds/index.xhtml</welcome-file>
     </welcome-file-list>
+    <filter>
+        <filter-name>SecurityFilter</filter-name>
+        <filter-class>controler.SecurityFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>SecurityFilter</filter-name>
+        <url-pattern>/feeds/*</url-pattern>
+    </filter-mapping>
 </web-app>
