@@ -10,7 +10,7 @@ public class UsuarioDAO extends DAO<Usuario> {
     public List<Usuario> listarTodos() {
         EntityManager manager = JpaUtil.getEntityManager();
         try {
-            TypedQuery<Usuario> query = manager.createQuery("from USUARIO", Usuario.class);
+            TypedQuery<Usuario> query = manager.createQuery("select u from Usuario u", Usuario.class);
             return query.getResultList();
         } finally {
             manager.close();
@@ -24,10 +24,9 @@ public class UsuarioDAO extends DAO<Usuario> {
             TypedQuery<Usuario> query = manager.createQuery("select u from Usuario u where u.email like :email", Usuario.class);
             query.setParameter("email", email.toLowerCase());
             return query.getSingleResult();
-        }catch(Exception e){
-            e.printStackTrace();
+        } catch (Exception e) {
             return null;
-                }finally {
+        } finally {
             manager.close();
             JpaUtil.close();
         }

@@ -11,7 +11,7 @@ public class InscricaoDAO extends DAO<Inscricao> {
     public List<Inscricao> listarTodos() {
         EntityManager manager = JpaUtil.getEntityManager();
         try {
-            TypedQuery<Inscricao> query = manager.createQuery("from INSCRICAO", Inscricao.class);
+            TypedQuery<Inscricao> query = manager.createQuery("select i from Inscricao i", Inscricao.class);
             return query.getResultList();
         } finally {
             manager.close();
@@ -32,9 +32,11 @@ public class InscricaoDAO extends DAO<Inscricao> {
     public Inscricao existeInscricao(String caminhoURL) {
         EntityManager manager = JpaUtil.getEntityManager();
         try {
-            TypedQuery<Inscricao> query = manager.createQuery("from INSCRICAO i where i.caminhoURL like :caminhoURL", Inscricao.class);
+            TypedQuery<Inscricao> query = manager.createQuery("select i from Inscricao i where i.caminhoURL like :caminhoURL", Inscricao.class);
             query.setParameter("caminhoURL", caminhoURL.toLowerCase());
             return query.getSingleResult();
+        } catch (Exception e) {
+            return null;
         } finally {
             manager.close();
             JpaUtil.close();
@@ -44,10 +46,12 @@ public class InscricaoDAO extends DAO<Inscricao> {
     public Feed existeFeed(Inscricao inscricao, String caminhoURL) {
         EntityManager manager = JpaUtil.getEntityManager();
         try {
-            TypedQuery<Feed> query = manager.createQuery("from FEED f where f.inscricao.id = :idInscricao AND f.caminhoURL like :caminhoURL", Feed.class);
+            TypedQuery<Feed> query = manager.createQuery("select f from Feed f where f.inscricao.id = :idInscricao AND f.caminhoURL like :caminhoURL", Feed.class);
             query.setParameter("idInscricao", inscricao.getId());
             query.setParameter("caminhoURL", caminhoURL);
             return query.getSingleResult();
+        } catch (Exception e) {
+            return null;
         } finally {
             manager.close();
             JpaUtil.close();

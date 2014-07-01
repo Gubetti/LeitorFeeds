@@ -31,7 +31,7 @@
 
                     <p:dataGrid columns="1" id="usuarioFeeds" var="feed"
                                 value="#{usuarioFeedBean.usuarioFeeds}" paginator="true"
-                                rows="20">
+                                rows="20" emptyMessage="Nenhuma postagem.">
                         <h:outputLink value="#{feed.feed.caminhoURL}" target="_blank">
                             <h:outputText value="#{feed.feed.titulo}" escape="false"
                                           style="font-weight: bold" />

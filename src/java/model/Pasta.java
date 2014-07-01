@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.persistence.CascadeType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,7 +32,7 @@ public class Pasta implements Comparable<Pasta> {
     @Column(nullable = false)
     private boolean pastaDefault;
 
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<PastaInscricao> listaPastaInscricao;
 
     public Pasta() {

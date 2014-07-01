@@ -61,12 +61,12 @@ public class InscricaoBean {
         Pasta pastaDefault = usuario.getPastaDefault();
 
         PastaInscricao pastaInscricao = new PastaInscricao(inscricao, new Date());
-        pastaDefault.addPastaInscricao(pastaInscricao);
+        DAO<PastaInscricao> daoPastaInscricao = new DAO<PastaInscricao>();
+        daoPastaInscricao.persistir(pastaInscricao);
 
         PastaDAO pastaDAO = new PastaDAO();
-        DAO<PastaInscricao> daoPastaInscricao = new DAO<PastaInscricao>();
+        pastaDefault.addPastaInscricao(pastaInscricao);
         pastaDAO.atualizar(pastaDefault);
-        daoPastaInscricao.persistir(pastaInscricao);
 
         ParseFeed.atualizarFeedUsuario();
         url = "";

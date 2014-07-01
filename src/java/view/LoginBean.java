@@ -58,18 +58,12 @@ public class LoginBean {
         usuario.setNome(nome);
         usuario.setEvento(new Date());
 
-        PastaDAO pastaDAO = new PastaDAO();
-
         Pasta pasta = new Pasta();
         pasta.setNome("Geral");
         pasta.setPastaDefault(true);
-        pastaDAO.persistir(pasta);
 
         usuario.addPasta(pasta);
         usuarioDAO.persistir(usuario);
-
-        pasta.setUsuario(usuario);
-        pastaDAO.atualizar(pasta);
 
         setEmail("");
         setSenha("");
