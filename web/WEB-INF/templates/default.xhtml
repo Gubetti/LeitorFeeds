@@ -68,13 +68,10 @@
                                 <p:outputLabel value="Buscar Tags" for="buscaTag" />
                                 <p:autoComplete id="buscaTag" completeMethod="#{tagBean.autoList}"
                                                 value="#{usuarioFeedBean.tagSelecionada}"
-                                                var="tagSel" itemLabel="#{tagSel.nome}" itemValue="#{tagSel}"
-                                                >
-<!-- descomentar
-                                                converter="tagConverter" forceSelection="true" >
--->
+                                                var="tagSel" itemLabel="#{tagSel.nome}" itemValue="#{tagSel}" converter="tagConverter" forceSelection="true">
+
                                     <p:ajax event="itemSelect"
-                                            listener="#{usuarioFeedBean.mostrarComTag}"
+                                            listener="#{usuarioFeedBean.filtrarTag()}"
                                             update="@all"/>
                                 </p:autoComplete>
                             </h:form>
