@@ -54,7 +54,7 @@ public class UsuarioFeedDAO extends DAO<UsuarioFeed> {
         try {
             TypedQuery<UsuarioFeed> query = manager.createQuery("select u from UsuarioFeed u where u.usuario.id = :idUsuario AND u.feed.inscricao.id = :idInscricao", UsuarioFeed.class);
             query.setParameter("idUsuario", idUsuario);
-            query.setParameter("idFeed", idInscricao);
+            query.setParameter("idInscricao", idInscricao);
             return query.getResultList();
         } finally {
             manager.close();
@@ -65,7 +65,7 @@ public class UsuarioFeedDAO extends DAO<UsuarioFeed> {
     public List<UsuarioFeed> usuarioFeedsNota(Integer idUsuario, int nota) {
         EntityManager manager = JpaUtil.getEntityManager();
         try {
-            TypedQuery<UsuarioFeed> query = manager.createQuery("select u from UsuarioFeed u where u.usuario.id = :idUsuario AND u.notafavoritado = :nota", UsuarioFeed.class);
+            TypedQuery<UsuarioFeed> query = manager.createQuery("select u from UsuarioFeed u where u.usuario.id = :idUsuario AND u.notaFavoritado = :nota", UsuarioFeed.class);
             query.setParameter("idUsuario", idUsuario);
             query.setParameter("nota", nota);
             return query.getResultList();

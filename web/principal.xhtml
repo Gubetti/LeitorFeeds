@@ -68,11 +68,7 @@
                             <p:outputLabel value="Tags:" for="autoTags" />
                             <p:autoComplete id="autoTags" multiple="true"
                                             value="#{feed.listaTag}" completeMethod="#{tagBean.autoList}"
-                                            var="tag" itemLabel="#{tag.nome}" itemValue="#{tag}"
-                                            >
-                                <!-- descomentar
-                                                                                converter="tagConverter" forceSelection="true" >
-                                -->
+                                            var="tag" itemLabel="#{tag.nome}" itemValue="#{tag}" converter="tagConverter" forceSelection="true" >
                                 <p:ajax event="itemSelect"
                                         listener="#{tagBean.inserirTag(feed)}" />
                                 <p:ajax event="itemUnselect"
