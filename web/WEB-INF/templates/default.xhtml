@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <title>Leitor Feeds</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -14,7 +14,7 @@
         <!-- Colocar css direto aqui
             Exemplo
             <h:outputStylesheet name="css/bootstrap.css" />
-            -->
+        -->
     </h:head>
     <!-- full-height na tag body é necessário para eliminar o scroll quando o row principal é configurado com width: 100% -->
     <h:body styleClass="full-height">
@@ -31,9 +31,9 @@
                             <h:form id="formAddInscricao">
                                 <p:inputText id="inputAddInscricao" value="#{inscricaoBean.url}"
                                              required="true" />
-                                    <p:commandButton id="buttonAddInscricao" value="Adicionar"
-                                                     actionListener="#{inscricaoBean.incluirInscricao}"
-                                                     action="#{usuarioFeedBean.mostrarTodos}" update="@all" />
+                                <p:commandButton id="buttonAddInscricao" value="Adicionar"
+                                                 actionListener="#{inscricaoBean.incluirInscricao}"
+                                                 action="#{usuarioFeedBean.mostrarTodos}" update="@all" />
                             </h:form>
                         </p:panel>
 
@@ -61,7 +61,7 @@
                                 <p:inputText id="inputAddTag" value="#{tagBean.novaTag}"
                                              required="true" />
                                 <p:commandButton id="buttonAddTag" value="Criar"
-                                                 action="#{tagBean.criarTag}" />
+                                                 action="#{tagBean.criarTag}" update="formTag"/>
                             </h:form>
                             <br />
                             <h:form id="formbuscaTag">

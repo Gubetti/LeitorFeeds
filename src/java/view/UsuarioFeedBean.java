@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 
 import model.Inscricao;
 import model.Tag;
@@ -19,7 +18,6 @@ import util.Utils;
 
 @ManagedBean(name = "usuarioFeedBean")
 @SessionScoped
-@ViewScoped
 public class UsuarioFeedBean {
 
     private List<UsuarioFeed> usuarioFeeds;
@@ -89,41 +87,49 @@ public class UsuarioFeedBean {
 
     /**
      * Método que filtra o UsuarioFeed para a categoria NAOLIDO.
+     * @return 
      */
-    public void mostrarTodos() {
+    public String mostrarTodos() {
         favoritos = false;
         setarFiltro(TipoFeed.NAOLIDO);
+        return "principal?faces-redirect=true";
     }
 
     /**
      * Método que filtra o UsuarioFeed para a categoria COMPARTILHADO.
+     * @return 
      */
-    public void mostrarCompartilhados() {
+    public String mostrarCompartilhados() {
         favoritos = false;
         setarFiltro(TipoFeed.COMPARTILHADO);
+        return "principal?faces-redirect=true";
     }
 
     /**
      * Método que filtra o UsuarioFeed para a categoria CURTIDO.
+     * @return 
      */
-    public void mostrarCurtidos() {
+    public String mostrarCurtidos() {
         favoritos = false;
         setarFiltro(TipoFeed.CURTIDO);
+        return "principal?faces-redirect=true";
     }
 
     /**
      * Método que filtra o UsuarioFeed para a categoria FAVORITADO.
      */
-    public void mostrarFavoritados() {
+    public String mostrarFavoritados() {
         favoritos = true;
         notaSelecionada = "0";
         setarFiltro(TipoFeed.FAVORITADO);
+        return "principal?faces-redirect=true";
     }
 
     /**
      * Método que filtra o UsuarioFeed com uma Tag em específico.
+     * @return 
      */
-    public void filtrarTag() {
+    public String filtrarTag() {
         favoritos = false;
         tituloFeed = "Feeds com a Tag: " + tagSelecionada.getNome();
         usuarioFeeds = new UsuarioFeedDAO().usuarioFeedsTag(
@@ -133,18 +139,21 @@ public class UsuarioFeedBean {
             usuarioFeeds = new ArrayList<UsuarioFeed>();
         }
         tagSelecionada = null;
+        return "principal?faces-redirect=true";
     }
 
     /**
      * Método que filtra o UsuarioFeed somente de uma Inscricao selecionada.
+     * @return 
      */
-    public void filtrarInscricao() {
+    public String filtrarInscricao() {
         favoritos = false;
         tituloFeed = inscricaoAtual.getNome();
         usuarioFeeds = new UsuarioFeedDAO().usuarioFeedsInscricao(((Usuario) Utils.retornaSessao().getAttribute(Utils.USUARIO)).getId(), inscricaoAtual.getId());
         if (usuarioFeeds == null) {
             usuarioFeeds = new ArrayList<UsuarioFeed>();
         }
+        return "principal?faces-redirect=true";
     }
 
     public void filtrarNota() {

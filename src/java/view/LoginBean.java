@@ -188,14 +188,14 @@ public class LoginBean {
         return "/index?faces-redirect=true";
     }
 
-    	public void perfil() {
-		try {
-			FacesContext.getCurrentInstance().getExternalContext().redirect("perfil.jsf");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-    
+    public void perfil() {
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("perfil.jsf");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public String getEmail() {
         return email;
     }

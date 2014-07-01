@@ -16,16 +16,16 @@
 
             <h:panelGrid columns="2">
                 <p:outputLabel for="login">Email:</p:outputLabel>
-                <p:inputText id="login" value="#{loginBean.email}" required="true" update="messages" style="width:200px">
+                <p:inputText id="login" value="#{loginBean.email}" required="true" style="width:200px">
                     <f:validateRegex
                         pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
                 </p:inputText>
                 <p:outputLabel for="nome">Nome:</p:outputLabel>
-                <p:inputText id="nome" value="#{loginBean.nome}" required="true" update="messages" style="width:200px"/>
+                <p:inputText id="nome" value="#{loginBean.nome}" required="true" style="width:200px"/>
                 <p:outputLabel for="senha">Senha:</p:outputLabel>
-                <p:password id="senha"  value="#{loginBean.senha}" required="true" update="messages"/>
+                <p:password id="senha"  value="#{loginBean.senha}" required="true"/>
                 <p:outputLabel for="confirmeSenha">Confirme:</p:outputLabel>
-                <p:password id="confirmeSenha"  value="#{loginBean.confirmeSenha}" required="true" update="messages"/>
+                <p:password id="confirmeSenha"  value="#{loginBean.confirmeSenha}" required="true"/>
                 <p:commandButton actionListener="#{loginBean.cadastrar}" value="Registrar" style="width:150%" update="registerForm" />  
             </h:panelGrid>
         </p:panel>
