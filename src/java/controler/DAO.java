@@ -38,7 +38,8 @@ public class DAO <T> {
         EntityManager manager = JpaUtil.getEntityManager();
         try {
             manager.getTransaction().begin();
-            manager.remove(objeto);
+            Object object = manager.merge(objeto);
+            manager.remove(object);
             manager.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();

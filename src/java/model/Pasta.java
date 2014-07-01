@@ -1,10 +1,7 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import controler.InscricaoDAO;
 import java.util.List;
-import javax.persistence.CascadeType;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @Entity
 public class Pasta implements Comparable<Pasta> {
@@ -32,9 +28,6 @@ public class Pasta implements Comparable<Pasta> {
     @Column(nullable = false)
     private boolean pastaDefault;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<PastaInscricao> listaPastaInscricao;
-
     public Pasta() {
     }
 
@@ -42,13 +35,6 @@ public class Pasta implements Comparable<Pasta> {
         this.nome = nome;
         this.usuario = usuario;
         this.pastaDefault = false;
-    }
-
-    public void addPastaInscricao(PastaInscricao pastaInscricao) {
-        if (this.listaPastaInscricao == null) {
-            this.listaPastaInscricao = new ArrayList<PastaInscricao>();
-        }
-        this.listaPastaInscricao.add(pastaInscricao);
     }
 
     public int getId() {
@@ -80,16 +66,7 @@ public class Pasta implements Comparable<Pasta> {
     }
 
     public List<PastaInscricao> getListaPastaInscricao() {
-        if (listaPastaInscricao == null) {
-            return Collections.emptyList();
-        } else {
-            Collections.sort(listaPastaInscricao);
-            return listaPastaInscricao;
-        }
-    }
-
-    public void setListaPastaInscricao(List<PastaInscricao> listaPastaInscricao) {
-        this.listaPastaInscricao = listaPastaInscricao;
+        return new InscricaoDAO().listaPastaInscricoes(id);
     }
 
     @Override

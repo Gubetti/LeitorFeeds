@@ -5,10 +5,12 @@ import controler.PastaDAO;
 import controler.UsuarioDAO;
 import java.util.Date;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import model.Inscricao;
 import model.Pasta;
@@ -49,17 +51,14 @@ public class PastaBean {
     public void setPastaSelecionada(Pasta pastaSelecionada) {
         this.pastaSelecionada = pastaSelecionada;
 
-        PastaDAO pastaDAO = new PastaDAO();
         DAO<PastaInscricao> daoPastaInscricao = new DAO<PastaInscricao>();
-        
+
         Inscricao inscricao = pastaInscricaoSelecionada.getInscricao();
 
         daoPastaInscricao.excluir(pastaInscricaoSelecionada);
 
-        PastaInscricao pastaInscricao = new PastaInscricao(inscricao, new Date());
-        this.pastaSelecionada.addPastaInscricao(pastaInscricao);
-        pastaDAO.atualizar(pastaSelecionada);
-        
+        PastaInscricao pastaInscricao = new PastaInscricao(pastaSelecionada, inscricao, new Date());
+
         daoPastaInscricao.persistir(pastaInscricao);
     }
 
@@ -87,12 +86,15 @@ public class PastaBean {
     public void addPasta() {
         PastaDAO pastaDAO = new PastaDAO();
         if (novaPasta != null && novaPasta.trim().length() > 0) {
-           Usuario usuario = (Usuario) Utils.retornaSessao().getAttribute(Utils.USUARIO);
-            if(pastaDAO.existePasta(usuario.getId(), novaPasta) != null) {
-                
+            Usuario usuario = (Usuario) Utils.retornaSessao().getAttribute(Utils.USUARIO);
+            if (pastaDAO.existePasta(usuario.getId(), novaPasta) != null) {
+                FacesMessage erro = new FacesMessage(FacesMessage.SEVERITY_FATAL,
+                        "Você já possui uma pasta com este nome.", "");
+                FacesContext.getCurrentInstance().addMessage(null, erro);
+                novaPasta = "";
                 return;
             }
-            
+
             Pasta pasta = new Pasta();
             pasta.setNome(novaPasta);
             pasta.setUsuario(usuario);

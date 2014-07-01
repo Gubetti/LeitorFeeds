@@ -48,7 +48,7 @@
                                 <p:commandButton styleClass="menuButton" value="Favoritados"
                                                  action="#{usuarioFeedBean.mostrarFavoritados}" update="@all" />
                                 <p:commandButton styleClass="menuButton" value="Perfil"
-                                                 action="#{usuarioBean.perfil}" />
+                                                 action="#{loginBean.perfil}" />
                                 <p:commandButton styleClass="menuButton" value="Logout"
                                                  action="#{loginBean.sair}" />
                             </h:form>
@@ -100,9 +100,9 @@
                                                            action="#{usuarioFeedBean.filtrarInscricao}"
                                                            update="@all">
                                                 <h:outputText
-                                                    value="#{inscr.pastaInscricaoPK.inscricao.nome}" />
+                                                    value="#{inscr.inscricao.nome}" />
                                                 <f:setPropertyActionListener
-                                                    value="#{inscr.pastaInscricaoPK.inscricao}"
+                                                    value="#{inscr.inscricao}"
                                                     target="#{usuarioFeedBean.inscricaoAtual}" />
                                             </p:commandLink>
                                             <br/>
@@ -139,7 +139,7 @@
             </div>
         </div>
         <!-- scripts -->
-        <h:outputScript name="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" />
+        <h:outputScript name="jquery-1.11.0.min.js" />
         <h:outputScript library="js" name="bootstrap.min.js" />
     </h:body>
 </html>

@@ -5,6 +5,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import model.Feed;
 import model.Inscricao;
+import model.PastaInscricao;
 
 public class InscricaoDAO extends DAO<Inscricao> {
 
@@ -19,6 +20,18 @@ public class InscricaoDAO extends DAO<Inscricao> {
         }
     }
 
+    public List<PastaInscricao> listaPastaInscricoes(Integer idPasta) {
+                EntityManager manager = JpaUtil.getEntityManager();
+        try {
+            TypedQuery<PastaInscricao> query = manager.createQuery("select i from PastaInscricao i where i.pasta.id = :idPasta", PastaInscricao.class);
+         query.setParameter("idPasta", idPasta);
+            return query.getResultList();
+        } finally {
+            manager.close();
+            JpaUtil.close();
+        }
+    }
+    
     public Inscricao buscarInscricao(Integer id) {
         EntityManager manager = JpaUtil.getEntityManager();
         try {

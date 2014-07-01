@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -20,7 +21,12 @@ public class PastaInscricao implements Comparable<PastaInscricao> {
     private Integer id;
 
     @ManyToOne
+    @JoinColumn(name = "idInscricao")
     private Inscricao inscricao;
+
+    @ManyToOne
+    @JoinColumn(name = "idPasta")
+    private Pasta pasta;
 
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -29,7 +35,8 @@ public class PastaInscricao implements Comparable<PastaInscricao> {
     public PastaInscricao() {
     }
 
-    public PastaInscricao(Inscricao inscricao, Date evento) {
+    public PastaInscricao(Pasta pasta, Inscricao inscricao, Date evento) {
+       this.pasta = pasta;
         this.inscricao = inscricao;
         this.evento = evento;
     }
@@ -44,6 +51,14 @@ public class PastaInscricao implements Comparable<PastaInscricao> {
 
     public void setInscricao(Inscricao inscricao) {
         this.inscricao = inscricao;
+    }
+
+    public Pasta getPasta() {
+        return pasta;
+    }
+
+    public void setPasta(Pasta pasta) {
+        this.pasta = pasta;
     }
 
     public Date getEvento() {
