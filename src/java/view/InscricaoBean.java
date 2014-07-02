@@ -2,7 +2,6 @@ package view;
 
 import controler.DAO;
 import controler.InscricaoDAO;
-import controler.PastaDAO;
 import java.io.IOException;
 import java.util.Date;
 
@@ -31,6 +30,11 @@ public class InscricaoBean {
      * Método que inclui uma nova inscrição para o usuário logado.
      */
     public void incluirInscricao() {
+        Usuario usuario = (Usuario) Utils.retornaSessao().getAttribute(Utils.USUARIO);
+        if(!usuario.isAssinante() && new InscricaoDAO().listaPastaInscricoes(usuario.getPastaDefault().getId()).size() > 3) {
+            return;
+        }
+        
         if (!url.startsWith("http://")) {
             url = "http://" + url;
         }
@@ -57,7 +61,6 @@ public class InscricaoBean {
             }
         }
 
-        Usuario usuario = (Usuario) Utils.retornaSessao().getAttribute(Utils.USUARIO);
         Pasta pastaDefault = usuario.getPastaDefault();
 
         PastaInscricao pastaInscricao = new PastaInscricao(pastaDefault, inscricao, new Date());

@@ -36,7 +36,7 @@
                                                  action="#{usuarioFeedBean.mostrarTodos}" update="@all" />
                                 <p:outputLabel for="inputAddInscricao" id="labelAddInscricao"
                                                rendered="#{loginBean.maxInscricoes}">
-                                    Assine
+                                    Assine o serviço
                                 </p:outputLabel>
                             </h:form>
                         </p:panel>
@@ -48,7 +48,8 @@
                                 <p:commandButton styleClass="menuButton" value="Curtidos"
                                                  action="#{usuarioFeedBean.mostrarCurtidos}" update="@all" />
                                 <p:commandButton styleClass="menuButton" value="Compartilhados"
-                                                 action="#{usuarioFeedBean.mostrarCompartilhados}" update="@all" />
+                                                 action="#{usuarioFeedBean.mostrarCompartilhados}" 
+                                                 disabled="#{loginBean.usuarioAssinante ? 'false' : 'true'}" update="@all" />
                                 <p:commandButton styleClass="menuButton" value="Favoritados"
                                                  action="#{usuarioFeedBean.mostrarFavoritados}" update="@all" />
                                 <p:commandButton styleClass="menuButton" value="Perfil"
@@ -87,8 +88,12 @@
                                 <br />
                                 <p:inputText id="inputAddPasta" value="#{pastaBean.novaPasta}"
                                              required="true" />
-                                <p:commandButton id="buttonAddPasta" value="Adicionar"
+                                <p:commandButton id="buttonAddPasta" value="Adicionar" rendered="#{loginBean.usuarioAssinante}"
                                                  action="#{pastaBean.addPasta}" update="@all" />
+                                <p:outputLabel for="buttonAddPasta" id="labelAddPasta"
+                                               rendered="#{!loginBean.usuarioAssinante}">
+                                    Assine o serviço
+                                </p:outputLabel>
                             </h:form>
                             <br />
                             <h:form id="formPastas">
@@ -107,7 +112,7 @@
                                                     target="#{usuarioFeedBean.inscricaoAtual}" />
                                             </p:commandLink>
                                             <br/>
-                                            <p:commandButton value="Mover"
+                                            <p:commandButton value="Mover" rendered="#{loginBean.usuarioAssinante}"
                                                              oncomplete="PF('dMover').show()">
                                                 <f:setPropertyActionListener value="#{inscr}"
                                                                              target="#{pastaBean.pastaInscricaoSelecionada}" />

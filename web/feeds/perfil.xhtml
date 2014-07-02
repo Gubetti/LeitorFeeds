@@ -54,7 +54,7 @@
                 <h:panelGrid columns="2">
                     <h:form id="assinarForm">
                         <p:outputLabel id="labelAssinar" for="buttonAssinar">Pague um café para os devs: </p:outputLabel>
-                        <p:commandButton id="buttonAssinar" action="#{loginBean.assinar}" value="#{loginBean.usuarioAssinante ? 'Cancelar' : 'Assinar'}" update="assinarForm"/>
+                        <p:commandButton id="buttonAssinar" action="#{loginBean.assinar}" value="#{loginBean.usuarioAssinante ? 'Cancelar' : 'Assinar'}" update="@all"/>
                     </h:form>
                 </h:panelGrid>
             </p:panel>

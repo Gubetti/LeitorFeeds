@@ -1,7 +1,6 @@
 package view;
 
 import controler.InscricaoDAO;
-import controler.PastaDAO;
 import controler.UsuarioDAO;
 import java.io.IOException;
 import java.util.Date;
@@ -89,11 +88,7 @@ public class LoginBean {
                 Utils.retornaSessao().setAttribute(Utils.USUARIO, usuario);
                 ParseFeed.atualizarFeedUsuario();
                 try {
-                    String caminho = "principal.jsf";
-                    if (!FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath().contains("feeds")) {
-                        caminho = "feeds/" + caminho;
-                    }
-                    FacesContext.getCurrentInstance().getExternalContext().redirect(caminho);
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("feeds/principal.jsf");
                     usuario.setUltimoAcesso(new Date());
                     usuarioDAO.atualizar(usuario);
                     setNome(usuario.getNome());
@@ -184,11 +179,11 @@ public class LoginBean {
     }
 
     public boolean isMaxInscricoes() {
-        Usuario usuario = (Usuario) Utils.retornaSessao().getAttribute(Utils.USUARIO);
-        if (usuario.isAssinante()) {
+        Usuario usuario = usuarioSessao();
+        if (usuario == null || usuario.isAssinante()) {
             return false;
         }
-        if (new InscricaoDAO().listaPastaInscricoes(usuario.getPastaDefault().getId()).size() < 5) {
+        if (new InscricaoDAO().listaPastaInscricoes(usuario.getPastaDefault().getId()).size() < 3) {
             return false;
         } else {
             return true;
@@ -197,7 +192,15 @@ public class LoginBean {
     }
 
     public boolean isUsuarioAssinante() {
-        return ((Usuario) Utils.retornaSessao().getAttribute(Utils.USUARIO)).isAssinante();
+        Usuario usuario = usuarioSessao();
+        if (usuario == null || !usuario.isAssinante()) {
+            return false;
+        }
+        return true;
+    }
+
+    private Usuario usuarioSessao() {
+        return (Usuario) Utils.retornaSessao().getAttribute(Utils.USUARIO);
     }
 
     public void assinar() {

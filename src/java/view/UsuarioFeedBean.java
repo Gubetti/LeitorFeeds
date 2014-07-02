@@ -38,6 +38,9 @@ public class UsuarioFeedBean {
      * UsuarioFeed selecionado a categoria compartilhado.
      */
     public void compartilhar() {
+        if(!((Usuario) Utils.retornaSessao().getAttribute(Utils.USUARIO)).isAssinante()) {
+            return;
+        }
         if (usuarioFeedSelecionado.getCompartilhado() == null) {
             usuarioFeedSelecionado.setCompartilhado(new Date());
         } else {
@@ -100,6 +103,9 @@ public class UsuarioFeedBean {
      * @return 
      */
     public String mostrarCompartilhados() {
+        if(!((Usuario) Utils.retornaSessao().getAttribute(Utils.USUARIO)).isAssinante()) {
+            return "";
+        }
         favoritos = false;
         setarFiltro(TipoFeed.COMPARTILHADO);
         return "principal?faces-redirect=true";
@@ -153,7 +159,7 @@ public class UsuarioFeedBean {
         if (usuarioFeeds == null) {
             usuarioFeeds = new ArrayList<UsuarioFeed>();
         }
-        return "feeds/principal?faces-redirect=true";
+        return "principal?faces-redirect=true";
     }
 
     public void filtrarNota() {
@@ -196,9 +202,11 @@ public class UsuarioFeedBean {
             case FAVORITADO:
                 tituloFeed = "Feeds Favoritados";
         }
-        usuarioFeeds = new UsuarioFeedDAO().usuarioFeedsTipo(
-                ((Usuario) Utils.retornaSessao().getAttribute(Utils.USUARIO)).getId(),
-                tipo);
+        Usuario usuario = (Usuario) Utils.retornaSessao().getAttribute(Utils.USUARIO);
+        if(usuario == null) {
+            return;
+        }
+        usuarioFeeds = new UsuarioFeedDAO().usuarioFeedsTipo(usuario.getId(), tipo);
         if (usuarioFeeds == null) {
             usuarioFeeds = new ArrayList<UsuarioFeed>();
         }

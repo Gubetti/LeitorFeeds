@@ -52,8 +52,8 @@
                             </p:commandButton>
                             <p:commandButton id="compartilhar"
                                              action="#{usuarioFeedBean.compartilhar}"
-                                             value="#{feed.compartilhado==null ? 'Compartilhar' : 'Compartilhado'}"
-                                             disabled="#{feed.compartilhado==null ? 'false' : 'true'}"
+                                             value="#{feed.compartilhado==null ? 'Compartilhar' : 'Descompartilhar'}"
+                                             rendered="#{loginBean.usuarioAssinante}"
                                              update="formBotoes">
                                 <f:setPropertyActionListener value="#{feed}"
                                                              target="#{usuarioFeedBean.usuarioFeedSelecionado}" />

@@ -28,14 +28,14 @@ public class SecurityFilter implements Filter {
         HttpSession session = req.getSession(true);
 
         String paginaRequisitada = req.getRequestURI().toString();
-        if (session.getAttribute(Utils.USUARIO) == null
-                && !paginaRequisitada.contains("index.jsf")) {
-            resp.sendRedirect(req.getContextPath() + "/feeds/index.jsf");
+        if (session.getAttribute(Utils.USUARIO) == null) {
+            resp.sendRedirect(req.getContextPath());
         }
 
         if (paginaRequisitada.contains("index.jsf") && session.getAttribute(Utils.USUARIO) != null) {
             resp.sendRedirect(req.getContextPath() + "/feeds/principal.jsf");
         }
+        
         chain.doFilter(request, response);
     }
 

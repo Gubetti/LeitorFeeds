@@ -3,6 +3,7 @@ package view;
 import controler.DAO;
 import controler.PastaDAO;
 import controler.UsuarioDAO;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.faces.application.FacesMessage;
@@ -77,16 +78,25 @@ public class PastaBean {
     }
 
     private void carregarPastas() {
-        pastas = ((Usuario) Utils.retornaSessao().getAttribute(Utils.USUARIO)).getListaPasta();
+        Usuario usuario = (Usuario) Utils.retornaSessao().getAttribute(Utils.USUARIO);
+        if (usuario == null) {
+            pastas = new ArrayList<Pasta>();
+
+        } else {
+            pastas = usuario.getListaPasta();
+        }
     }
 
     /**
      * Método que cria uma nova pasta para o usuário logado.
      */
     public void addPasta() {
+        Usuario usuario = (Usuario) Utils.retornaSessao().getAttribute(Utils.USUARIO);
+        if(!usuario.isAssinante()) {
+            return;
+        }
         PastaDAO pastaDAO = new PastaDAO();
         if (novaPasta != null && novaPasta.trim().length() > 0) {
-            Usuario usuario = (Usuario) Utils.retornaSessao().getAttribute(Utils.USUARIO);
             if (pastaDAO.existePasta(usuario.getId(), novaPasta) != null) {
                 FacesMessage erro = new FacesMessage(FacesMessage.SEVERITY_FATAL,
                         "Você já possui uma pasta com este nome.", "");
