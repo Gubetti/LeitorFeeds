@@ -45,4 +45,8 @@
         <filter-name>SecurityFilter</filter-name>
         <url-pattern>/feeds/*</url-pattern>
     </filter-mapping>
+    <context-param>  
+        <param-name>primefaces.THEME</param-name>  
+        <param-value>humanity</param-value>  
+    </context-param>
 </web-app>

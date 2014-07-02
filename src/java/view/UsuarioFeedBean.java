@@ -27,10 +27,10 @@ public class UsuarioFeedBean {
     private Tag tagSelecionada;
     private String notaSelecionada;
     private boolean favoritos;
+    private boolean iniciou = false;
 
     public UsuarioFeedBean() {
         usuarioFeeds = new ArrayList<UsuarioFeed>();
-        mostrarTodos();
     }
 
     /**
@@ -38,7 +38,7 @@ public class UsuarioFeedBean {
      * UsuarioFeed selecionado a categoria compartilhado.
      */
     public void compartilhar() {
-        if(!((Usuario) Utils.retornaSessao().getAttribute(Utils.USUARIO)).isAssinante()) {
+        if (!((Usuario) Utils.retornaSessao().getAttribute(Utils.USUARIO)).isAssinante()) {
             return;
         }
         if (usuarioFeedSelecionado.getCompartilhado() == null) {
@@ -90,7 +90,8 @@ public class UsuarioFeedBean {
 
     /**
      * Método que filtra o UsuarioFeed para a categoria NAOLIDO.
-     * @return 
+     *
+     * @return
      */
     public String mostrarTodos() {
         favoritos = false;
@@ -100,10 +101,11 @@ public class UsuarioFeedBean {
 
     /**
      * Método que filtra o UsuarioFeed para a categoria COMPARTILHADO.
-     * @return 
+     *
+     * @return
      */
     public String mostrarCompartilhados() {
-        if(!((Usuario) Utils.retornaSessao().getAttribute(Utils.USUARIO)).isAssinante()) {
+        if (!((Usuario) Utils.retornaSessao().getAttribute(Utils.USUARIO)).isAssinante()) {
             return "";
         }
         favoritos = false;
@@ -113,7 +115,8 @@ public class UsuarioFeedBean {
 
     /**
      * Método que filtra o UsuarioFeed para a categoria CURTIDO.
-     * @return 
+     *
+     * @return
      */
     public String mostrarCurtidos() {
         favoritos = false;
@@ -133,7 +136,8 @@ public class UsuarioFeedBean {
 
     /**
      * Método que filtra o UsuarioFeed com uma Tag em específico.
-     * @return 
+     *
+     * @return
      */
     public String filtrarTag() {
         favoritos = false;
@@ -150,7 +154,8 @@ public class UsuarioFeedBean {
 
     /**
      * Método que filtra o UsuarioFeed somente de uma Inscricao selecionada.
-     * @return 
+     *
+     * @return
      */
     public String filtrarInscricao() {
         favoritos = false;
@@ -203,7 +208,7 @@ public class UsuarioFeedBean {
                 tituloFeed = "Feeds Favoritados";
         }
         Usuario usuario = (Usuario) Utils.retornaSessao().getAttribute(Utils.USUARIO);
-        if(usuario == null) {
+        if (usuario == null) {
             return;
         }
         usuarioFeeds = new UsuarioFeedDAO().usuarioFeedsTipo(usuario.getId(), tipo);
@@ -214,6 +219,11 @@ public class UsuarioFeedBean {
     }
 
     public List<UsuarioFeed> getUsuarioFeeds() {
+        Usuario usuario = (Usuario) Utils.retornaSessao().getAttribute(Utils.USUARIO);
+        if (usuario != null && !iniciou) {
+            mostrarTodos();
+            iniciou = true;
+        }
         return usuarioFeeds;
     }
 
