@@ -179,7 +179,7 @@ public class LoginBean {
         }
     }
     
-    public boolean maxInscricoes() {
+    public boolean getMaxInscricoes() {
         Usuario usuario = (Usuario) Utils.retornaSessao().getAttribute(Utils.USUARIO);
         if (usuario.isAssinante()) {
             return false;
@@ -190,6 +190,10 @@ public class LoginBean {
             return true;
         }
          
+    }
+    
+    public boolean usuarioIsAssinante() {
+        return ((Usuario) Utils.retornaSessao().getAttribute(Utils.USUARIO)).isAssinante();
     }
 
     public void assinar() {

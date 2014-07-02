@@ -50,8 +50,11 @@ html, .full-height {
 	padding-left: 8px !important;
 }
 
-/*
-.ui-inputtextarea {
-	height: 110px !important;
+.fonte {
+    font-size: 12px !important;
 }
-*/
+
+.panel-form {
+    margin:auto !important;
+    width:295px !important;
+}

@@ -50,6 +50,15 @@
                 </h:form>
             </p:panel>
 
+            <p:panel styleClass="panel-form">
+                <h:panelGrid columns="2">
+                    <h:form id="assinarForm">
+                        <p:outputLabel for="assinar">Pague um café para os devs: </p:outputLabel>
+                        <p:commandButton actionListener="#{loginBean.assinar()}" value="#{loginBean.usuarioIsAssinante ? 'Cancelar' : 'Assinar'}" />
+                    </h:form>
+                </h:panelGrid>
+            </p:panel>
+            
         </p:scrollPanel>
     </ui:define>
 </ui:composition>
