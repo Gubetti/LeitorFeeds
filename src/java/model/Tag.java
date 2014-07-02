@@ -1,5 +1,7 @@
 package model;
 
+import com.sun.xml.bind.CycleRecoverable;
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Tag implements Comparable<Tag>{
+public class Tag implements Comparable<Tag>, Serializable, CycleRecoverable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,5 +63,12 @@ public class Tag implements Comparable<Tag>{
 		}
 		return 0;
 	}
+
+    @Override
+    public Object onCycleDetected(Context cntxt) {
+        Tag tag = new Tag();
+        tag.id=this.id;
+        return id;
+    }
 
 }

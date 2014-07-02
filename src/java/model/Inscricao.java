@@ -1,9 +1,10 @@
 package model;
 
+import com.sun.xml.bind.CycleRecoverable;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,7 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Inscricao {
+public class Inscricao implements Serializable, CycleRecoverable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -75,5 +76,12 @@ public class Inscricao {
 
     public void setListaFeed(List<Feed> listaFeed) {
         this.listaFeed = listaFeed;
+    }
+
+    @Override
+    public Object onCycleDetected(Context cntxt) {
+        Inscricao inscricao = new Inscricao();
+        inscricao.id = this.id;
+        return inscricao;
     }
 }

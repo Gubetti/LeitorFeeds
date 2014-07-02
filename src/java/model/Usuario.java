@@ -1,11 +1,12 @@
 package model;
 
+import com.sun.xml.bind.CycleRecoverable;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +17,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class Usuario {
+public class Usuario implements Serializable, CycleRecoverable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -151,5 +152,12 @@ public class Usuario {
             Collections.sort(listaTag);
             return listaTag;
         }
+    }
+
+    @Override
+    public Object onCycleDetected(Context cntxt) {
+        Usuario usuario= new Usuario();
+        usuario.id=this.id;
+        return usuario;
     }
 }

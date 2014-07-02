@@ -1,10 +1,11 @@
 package model;
 
+import com.sun.xml.bind.CycleRecoverable;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +18,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class UsuarioFeed implements Comparable<UsuarioFeed> {
+public class UsuarioFeed implements Comparable<UsuarioFeed>, Serializable, CycleRecoverable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -133,6 +134,13 @@ public class UsuarioFeed implements Comparable<UsuarioFeed> {
             return -1;
         }
         return 0;
+    }
+
+    @Override
+    public Object onCycleDetected(Context cntxt) {
+        UsuarioFeed usuarioFeed=new UsuarioFeed();
+        usuarioFeed.id = this.id;
+        return id;
     }
 
 }

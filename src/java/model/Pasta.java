@@ -1,6 +1,8 @@
 package model;
 
+import com.sun.xml.bind.CycleRecoverable;
 import controler.InscricaoDAO;
+import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Pasta implements Comparable<Pasta> {
+public class Pasta implements Comparable<Pasta>, Serializable, CycleRecoverable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -80,6 +82,13 @@ public class Pasta implements Comparable<Pasta> {
         }
 
         return 0;
+    }
+
+    @Override
+    public Object onCycleDetected(Context cntxt) {
+        Pasta pasta=new Pasta();
+        pasta.id=this.id;
+        return pasta;
     }
 
 }
