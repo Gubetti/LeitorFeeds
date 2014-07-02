@@ -89,7 +89,11 @@ public class LoginBean {
                 Utils.retornaSessao().setAttribute(Utils.USUARIO, usuario);
                 ParseFeed.atualizarFeedUsuario();
                 try {
-                    FacesContext.getCurrentInstance().getExternalContext().redirect("principal.jsf");
+                    String caminho = "principal.jsf";
+                    if (!FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath().contains("feeds")) {
+                        caminho = "feeds/" + caminho;
+                    }
+                    FacesContext.getCurrentInstance().getExternalContext().redirect(caminho);
                     usuario.setUltimoAcesso(new Date());
                     usuarioDAO.atualizar(usuario);
                     setNome(usuario.getNome());
@@ -178,8 +182,8 @@ public class LoginBean {
             setSenhaAtual("");
         }
     }
-    
-    public boolean getMaxInscricoes() {
+
+    public boolean isMaxInscricoes() {
         Usuario usuario = (Usuario) Utils.retornaSessao().getAttribute(Utils.USUARIO);
         if (usuario.isAssinante()) {
             return false;
@@ -189,19 +193,19 @@ public class LoginBean {
         } else {
             return true;
         }
-         
+
     }
-    
-    public boolean usuarioIsAssinante() {
+
+    public boolean isUsuarioAssinante() {
         return ((Usuario) Utils.retornaSessao().getAttribute(Utils.USUARIO)).isAssinante();
     }
 
     public void assinar() {
         Usuario usuario = (Usuario) Utils.retornaSessao().getAttribute(Utils.USUARIO);
-        if(usuario.isAssinante()) {
+        if (usuario.isAssinante()) {
             usuario.setAssinante(false);
         } else {
-            usuario.setAssinante(true); 
+            usuario.setAssinante(true);
         }
         new UsuarioDAO().atualizar(usuario);
     }

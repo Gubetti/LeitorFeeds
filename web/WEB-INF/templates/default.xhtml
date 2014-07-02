@@ -34,7 +34,7 @@
                                 <p:commandButton rendered="#{!loginBean.maxInscricoes}" id="buttonAddInscricao" value="Adicionar"
                                                  actionListener="#{inscricaoBean.incluirInscricao}"
                                                  action="#{usuarioFeedBean.mostrarTodos}" update="@all" />
-                                <p:outputLabel for="inputAddInscricao"
+                                <p:outputLabel for="inputAddInscricao" id="labelAddInscricao"
                                                rendered="#{loginBean.maxInscricoes}">
                                     Assine
                                 </p:outputLabel>
@@ -89,10 +89,7 @@
                                              required="true" />
                                 <p:commandButton id="buttonAddPasta" value="Adicionar"
                                                  action="#{pastaBean.addPasta}" update="@all" />
-                                <p:outputLabel for="inputAddInscricao"
-                                               rendered="#{usuarioFeedBean.favoritos ? 'true' : 'false'}">
-                                    Visualizando: 
-                                </p:outputLabel>                            </h:form>
+                            </h:form>
                             <br />
                             <h:form id="formPastas">
                                 <p:accordionPanel value="#{pastaBean.pastas}" var="pasta"

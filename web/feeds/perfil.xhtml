@@ -29,7 +29,7 @@
                         </h:panelGrid>
                     </p:panel>
                 </h:form>
-			
+
                 <h:outputText value="Alterar senha" />
                 <br />
                 <h:form id="senhaForm">   
@@ -53,12 +53,12 @@
             <p:panel styleClass="panel-form">
                 <h:panelGrid columns="2">
                     <h:form id="assinarForm">
-                        <p:outputLabel for="assinar">Pague um café para os devs: </p:outputLabel>
-                        <p:commandButton actionListener="#{loginBean.assinar()}" value="#{loginBean.usuarioIsAssinante ? 'Cancelar' : 'Assinar'}" />
+                        <p:outputLabel id="labelAssinar" for="buttonAssinar">Pague um café para os devs: </p:outputLabel>
+                        <p:commandButton id="buttonAssinar" action="#{loginBean.assinar}" value="#{loginBean.usuarioAssinante ? 'Cancelar' : 'Assinar'}" update="assinarForm"/>
                     </h:form>
                 </h:panelGrid>
             </p:panel>
-            
+
         </p:scrollPanel>
     </ui:define>
 </ui:composition>
