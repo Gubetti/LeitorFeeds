@@ -178,6 +178,16 @@ public class LoginBean {
         }
     }
 
+    public void assinar() {
+        Usuario usuario = (Usuario) Utils.retornaSessao().getAttribute(Utils.USUARIO);
+        if(usuario.isAssinante()) {
+            usuario.setAssinante(false);
+        } else {
+            usuario.setAssinante(true); 
+        }
+        new UsuarioDAO().atualizar(usuario);
+    }
+
     /**
      * Método chamado para realizar o logout do sistema.
      *
@@ -185,12 +195,12 @@ public class LoginBean {
      */
     public String sair() {
         Utils.retornaSessao().invalidate();
-        return "/feeds/index?faces-redirect=true";
+        return "index?faces-redirect=true";
     }
 
     public void perfil() {
         try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("feeds/perfil.jsf");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("perfil.jsf");
         } catch (IOException e) {
             e.printStackTrace();
         }

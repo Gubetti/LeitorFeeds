@@ -102,7 +102,7 @@ public class UsuarioFeedBean {
     public String mostrarCompartilhados() {
         favoritos = false;
         setarFiltro(TipoFeed.COMPARTILHADO);
-        return "feeds/principal?faces-redirect=true";
+        return "principal?faces-redirect=true";
     }
 
     /**
@@ -112,7 +112,7 @@ public class UsuarioFeedBean {
     public String mostrarCurtidos() {
         favoritos = false;
         setarFiltro(TipoFeed.CURTIDO);
-        return "feeds/principal?faces-redirect=true";
+        return "principal?faces-redirect=true";
     }
 
     /**
@@ -122,7 +122,7 @@ public class UsuarioFeedBean {
         favoritos = true;
         notaSelecionada = "0";
         setarFiltro(TipoFeed.FAVORITADO);
-        return "feeds/principal?faces-redirect=true";
+        return "principal?faces-redirect=true";
     }
 
     /**
@@ -139,7 +139,7 @@ public class UsuarioFeedBean {
             usuarioFeeds = new ArrayList<UsuarioFeed>();
         }
         tagSelecionada = null;
-        return "feeds/principal?faces-redirect=true";
+        return "principal?faces-redirect=true";
     }
 
     /**
