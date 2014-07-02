@@ -1,5 +1,6 @@
 package view;
 
+import controler.InscricaoDAO;
 import controler.PastaDAO;
 import controler.UsuarioDAO;
 import java.io.IOException;
@@ -176,6 +177,19 @@ public class LoginBean {
             FacesContext.getCurrentInstance().addMessage(null, erro);
             setSenhaAtual("");
         }
+    }
+    
+    public boolean maxInscricoes() {
+        Usuario usuario = (Usuario) Utils.retornaSessao().getAttribute(Utils.USUARIO);
+        if (usuario.isAssinante()) {
+            return false;
+        }
+        if (new InscricaoDAO().listaPastaInscricoes(usuario.getPastaDefault().getId()).size() < 5) {
+            return false;
+        } else {
+            return true;
+        }
+         
     }
 
     public void assinar() {
